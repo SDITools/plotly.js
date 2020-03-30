@@ -592,7 +592,7 @@ function attachPointerEvents(selection, sankey, eventSet) {
                 d.interactionState.hovered = false;
             }
         })
-        .on('click.basic', function(d) {
+        .on('mousedown.basic', function(d) {
             if(d.interactionState.hovered) {
                 eventSet.unhover(this, d, sankey);
                 d.interactionState.hovered = false;
@@ -1052,9 +1052,66 @@ module.exports = function(gd, svg, calcData, layout, callbacks) {
         .attr('startOffset', nodeTextOffset)
         .style('fill', nodeTextColor);
 
-    nodeLabelTextPath
-        .text(function(d) {return d.horizontal || d.node.dy > 5 ? d.node.label : '';})
-        .attr('text-anchor', function(d) {return d.horizontal && d.left ? 'end' : 'start';});
+    function chunkString(input, chunkSize) {
+        console.log(typeof chunkSize);
+        var len = chunkSize;
+        var curr = len;
+        var prev = 0;
+
+        var output = [];
+
+        while (input[curr]) {
+            if (input[curr++] == ' ') {
+                output.push(input.substring(prev,curr));
+                prev = curr;
+                curr += len;
+            }
+        }
+        output.push(input.substr(prev));
+        return output;
+    }
+
+    var maxCharPerLineAttr = gd.getAttribute('data-max-char-count');
+    var maxCharPerLine = maxCharPerLineAttr ? parseInt(maxCharPerLineAttr, 10) : null
+    if (!maxCharPerLine) {
+      nodeLabelTextPath
+          .text(function(d) {
+            return d.horizontal || d.node.dy > 5 ? d.node.label : '';
+          })
+          .attr('text-anchor', function(d) {return d.horizontal && d.left ? 'end' : 'start';});
+    } else {
+      nodeLabelTextPath
+          .selectAll('tspan')
+          .data(function(d) {
+            var lines = chunkString( d.node.label, maxCharPerLine)
+            return lines.map((line) => {
+              return Object.assign({}, d, { displayText: line, totalCount: lines.length })
+            })
+          })
+          .enter()
+          .append('tspan')
+          .attr('class', (d) => {
+            return d.totalCount > 1 ? 'multiline-text' : 'singleline-text';
+          })
+          .text(d => {
+            return d.horizontal || d.node.dy > 5 ? d.displayText : '';
+          })
+          .attr('x', (d) => {
+            var x = 0;
+            if (d.totalCount > 1) {
+              x = d.horizontal && d.left ? 20 : 0;
+            }
+            console.log(d.displayText, d, x);
+            return x;
+          })
+          .attr('dy', function(d, index) {
+            return index === 0 ? (d.totalCount > 1 ? -20 : 0) : 15;
+          })
+          .attr('text-anchor', function(d) {
+            return d.horizontal && d.left ? 'end' : 'start';
+          });
+
+    }
 
     nodeLabelTextPath
         .transition()
