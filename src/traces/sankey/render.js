@@ -6,6 +6,8 @@
 * LICENSE file in the root directory of this source tree.
 */
 
+// Modified for Apollo
+
 'use strict';
 
 var c = require('./constants');
