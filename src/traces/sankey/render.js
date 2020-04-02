@@ -1055,6 +1055,7 @@ module.exports = function(gd, svg, calcData, layout, callbacks) {
         .style('fill', nodeTextColor);
 
     function chunkString(input, chunkSize) {
+        var len = chunkSize;
         var curr = len;
         var prev = 0;
 
@@ -1101,6 +1102,7 @@ module.exports = function(gd, svg, calcData, layout, callbacks) {
             if (d.totalCount > 1) {
               x = d.horizontal && d.left ? 20 : 0;
             }
+            console.log(d.displayText, d, x);
             return x;
           })
           .attr('dy', function(d, index) {
