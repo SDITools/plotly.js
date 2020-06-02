@@ -1099,10 +1099,8 @@ module.exports = function(gd, svg, calcData, layout, callbacks) {
           })
           .attr('x', (d) => {
             var x = 0;
-            if (d.totalCount > 1) {
-              x = d.horizontal && d.left ? 20 : 0;
-            }
-            console.log(d.displayText, d, x);
+            x = d.horizontal && d.left ? -45 : 5;
+
             return x;
           })
           .attr('dy', function(d, index) {
