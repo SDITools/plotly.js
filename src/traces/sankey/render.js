@@ -1099,7 +1099,8 @@ module.exports = function(gd, svg, calcData, layout, callbacks) {
           })
           .attr('x', (d) => {
             var x = 0;
-            x = d.horizontal && d.left ? -45 : 5;
+            var length = d.displayText.length * 7 * -1;
+            x = d.horizontal && d.left ? length : 5;
 
             return x;
           })
