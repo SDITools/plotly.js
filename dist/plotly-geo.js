@@ -1,5 +1,5 @@
 /**
-* plotly.js (geo) v1.53.1
+* plotly.js (geo) v1.53.2
 * Copyright 2012-2020, Plotly, Inc.
 * All rights reserved.
 * Licensed under the MIT license
@@ -78789,7 +78789,7 @@ function styleTrace(gd, calcTrace) {
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.53.1';
+exports.version = '1.53.2';
 
 },{}]},{},[4])(4)
 });

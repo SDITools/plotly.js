@@ -1,5 +1,5 @@
 /**
-* plotly.js (mapbox) v1.53.1
+* plotly.js (mapbox) v1.53.2
 * Copyright 2012-2020, Plotly, Inc.
 * All rights reserved.
 * Licensed under the MIT license
@@ -78910,7 +78910,7 @@ module.exports = function selectPoints(searchInfo, selectionTester) {
 'use strict';
 
 // package version injected by `npm run preprocess`
-exports.version = '1.53.1';
+exports.version = '1.53.2';
 
 },{}]},{},[5])(5)
 });

@@ -1043,16 +1043,16 @@ module.exports = function(gd, svg, calcData, layout, callbacks) {
         .ease(c.ease).duration(c.duration)
         .attr('transform', textFlip);
 
-    var nodeLabelTextPath = nodeLabel.selectAll('.' + c.cn.nodeLabelTextPath)
-        .data(repeat);
+    // var nodeLabelTextPath = nodeLabel.selectAll('.' + c.cn.nodeLabelTextPath)
+    //     .data(repeat);
 
-    nodeLabelTextPath.enter()
-        .append('textPath')
-        .classed(c.cn.nodeLabelTextPath, true)
-        .attr('alignment-baseline', 'middle')
-        .attr('xlink:href', function(d) {return '#' + d.uniqueNodeLabelPathId;})
-        .attr('startOffset', nodeTextOffset)
-        .style('fill', nodeTextColor);
+    // nodeLabelTextPath.enter()
+    //     .append('textPath')
+    //     .classed(c.cn.nodeLabelTextPath, true)
+    //     .attr('alignment-baseline', 'middle')
+    //     .attr('xlink:href', function(d) {return '#' + d.uniqueNodeLabelPathId;})
+    //     .attr('startOffset', nodeTextOffset)
+    //     .style('fill', nodeTextColor);
 
     function chunkString(input, chunkSize) {
         var len = chunkSize;
@@ -1075,13 +1075,13 @@ module.exports = function(gd, svg, calcData, layout, callbacks) {
     var maxCharPerLineAttr = gd.getAttribute('data-max-char-count');
     var maxCharPerLine = maxCharPerLineAttr ? parseInt(maxCharPerLineAttr, 10) : null
     if (!maxCharPerLine) {
-      nodeLabelTextPath
+      nodeLabel
           .text(function(d) {
             return d.horizontal || d.node.dy > 5 ? d.node.label : '';
           })
           .attr('text-anchor', function(d) {return d.horizontal && d.left ? 'end' : 'start';});
     } else {
-      nodeLabelTextPath
+      nodeLabel
           .selectAll('tspan')
           .data(function(d) {
             var lines = chunkString( d.node.label, maxCharPerLine)
@@ -1099,8 +1099,8 @@ module.exports = function(gd, svg, calcData, layout, callbacks) {
           })
           .attr('x', (d) => {
             var x = 0;
-            var length = ((d.displayText.length * 7.5) + 10) * -1;
-            x = d.horizontal && d.left ? length : 5;
+            // var length = ((d.displayText.length * 7.5) + 10) * -1;
+            x = d.horizontal && d.left ? -10 : 10;
 
             return x;
           })
