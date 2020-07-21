@@ -1085,7 +1085,7 @@ module.exports = function(gd, svg, calcData, layout, callbacks) {
           .selectAll('tspan')
           .data(function(d) {
             var lines = chunkString( d.node.label, maxCharPerLine)
-            return lines.map((line) => {
+            return lines.map(function(line) {
               return Object.assign({}, d, { displayText: line, totalCount: lines.length })
             })
           })
@@ -1113,7 +1113,7 @@ module.exports = function(gd, svg, calcData, layout, callbacks) {
 
     }
 
-    nodeLabelTextPath
+    nodeLabel
         .transition()
         .ease(c.ease).duration(c.duration)
         .attr('startOffset', nodeTextOffset)
